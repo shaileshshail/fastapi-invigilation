@@ -4,7 +4,7 @@ from .database import engine,SessionLocal,get_db
 
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import user,event,authentication
+from .routers import user,event,authentication,staff
 
 from .repository.biometric import bio_data
 
@@ -16,9 +16,10 @@ models.Base.metadata.create_all(engine)
 app.include_router(authentication.router)
 app.include_router(user.router)
 app.include_router(event.router)
+app.include_router(staff.router)
 origins = [
     "http://localhost:4200",
-    "http://localhost:8080",
+    "http://localhost:8000",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -29,11 +30,5 @@ app.add_middleware(
 )
 
 
-'''schedule.every(10).seconds.do(bio_data)
+from .repository import biometric
 
-while True:
- 
-    # Checks whether a scheduled task
-    # is pending to run or not
-    schedule.run_pending()
-    time.sleep(1)'''

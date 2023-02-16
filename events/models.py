@@ -1,6 +1,7 @@
 from .database import Base
 from sqlalchemy import Column,Integer,String,Date
-
+from sqlalchemy.sql import func
+import datetime
 class Event(Base):
     __tablename__ = "events"
     id = Column(Integer,primary_key=True,index=True)
@@ -9,6 +10,7 @@ class Event(Base):
     session = Column(String)
     classrooms = Column(String)
     staffs = Column(String)
+    backup = Column(String)
 
 class Staff(Base):
     __tablename__ = "staff"
@@ -24,9 +26,18 @@ class User(Base):
     email = Column(String,primary_key=True)
     name = Column(String)
     password= Column(String)
+    privilege= Column(String)
     
 class Classrooms(Base):
     __tablename__ = "classrooms"
 
     room_no = Column(String,primary_key=True)
     floor = Column(String)
+    block = Column(String)
+
+class PresentStaff(Base):
+    __tablename__ = "presentstaff"
+
+    id = Column(Integer,primary_key=True,autoincrement=True)
+    date = Column()
+    data = Column(String)

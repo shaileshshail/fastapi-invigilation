@@ -7,15 +7,10 @@ class EventSchema(BaseModel):
     classrooms: str = "[ ]"
 
 class UserSchema(BaseModel):
-    name:str
     email:str
-    password:str
+    privilege:str
 
-class UserResponseSchema(BaseModel):
-    name:str
-    email:str
-    class Config():
-        orm_mode =True
+
 
 class TokenSchema(BaseModel):
     federatedId: str

@@ -26,7 +26,7 @@ def login(request:OAuth2PasswordRequestForm=Depends(),db:Session=Depends(get_db)
     elif not hashing.Hash.verify(request.password,user.password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Invalid password")  # chnage password to credential 
 
-    access_token = JWTtoken.create_access_token(data={"email": user.email})
+    access_token = JWTtoken.create_access_token(data={"email": user.email,"privilege":user.privilege})
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -46,7 +46,7 @@ def loginGoogle(request:schemas.TokenSchema,db:Session=Depends(get_db)):
     if not user: #check username
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Invalid Credentials") 
     print( request.email)
-    access_token = JWTtoken.create_access_token(data={"email": user.email})
+    access_token = JWTtoken.create_access_token(data={"email": user.email,"privilege":user.privilege})
     return access_token
 
 

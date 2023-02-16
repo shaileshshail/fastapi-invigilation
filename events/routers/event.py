@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from .. import schemas,database
 
 from ..repository import event
+from fastapi.responses import FileResponse
 
 from .. import oauth2
 
@@ -14,7 +15,6 @@ router = APIRouter(
 )
 
 get_db=database.get_db
-
 
 
 @router.post('/add',status_code=status.HTTP_201_CREATED)
@@ -42,7 +42,11 @@ def updateEvent(id:int,form:schemas.EventSchema,db:Session = Depends(get_db)):
     return event.update_event(id,form,db)
 
 
+@router.get('/classrooms/')
+def getClassrooms(db:Session = Depends(get_db)):
+    return event.get_all_classrooms(db)
 
-
-
-
+@router.get('/file/{id}')
+def getOneEventFile(id:int,db:Session = Depends(get_db)):
+    file_path="D:/1.pdf"
+    return FileResponse(path=file_path, filename=file_path, media_type='text/mp4')
